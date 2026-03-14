@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Bot Developer — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #080c10;
+    --surface:  #0d1520;
+    --border:   #1a2535;
+    --accent:   #00e5ff;
+    --green:    #00ff88;
+    --red:      #ff4757;
+    --gold:     #ffd700;
+    --text:     #c8d8e8;
+    --muted:    #4a6580;
+    --glow:     0 0 30px rgba(0,229,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.25);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .tagline {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  /* ── SECTION TITLES ── */
+  .section { padding: 64px 0; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 40px;
+  }
+
+  /* ── PRODUCT CARDS ── */
+  .cards { display: grid; gap: 20px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.2s; }
+  .card:nth-child(3) { animation-delay: 0.3s; }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgba(0,229,255,0.3);
+    transform: translateY(-2px);
+    box-shadow: var(--glow);
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .card-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .price-tag {
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+
+  .card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 15px;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .feature::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .tech-stack {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tech {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* ── WHAT YOU GET ── */
+  .deliverables {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+    margin-top: 0;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .deliverable-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .deliverable {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .deliverable-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .deliverable h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .deliverable p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* ── TERMINAL DEMO ── */
+  .terminal {
+    background: #050810;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 40px;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .terminal-bar {
+    background: #0d1520;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #27c93f; }
+
+  .terminal-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 8px;
+  }
+
+  .terminal-body {
+    padding: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .t-green  { color: var(--green); }
+  .t-accent { color: var(--accent); }
+  .t-muted  { color: var(--muted); }
+  .t-gold   { color: var(--gold); }
+  .t-red    { color: var(--red); }
+  .t-white  { color: #fff; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 60px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    animation: fadeUp 0.6s 0.6s ease both;
+  }
+
+  .cta-title {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .cta-sub {
+    color: var(--muted);
+    margin-bottom: 32px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,229,255,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(0,229,255,0.08);
+  }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    background: rgba(0,229,255,0.02);
+  }
+
+  .ticker {
+    display: flex;
+    gap: 48px;
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  .ticker-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+  }
+
+  .ticker-item .up   { color: var(--green); }
+  .ticker-item .down { color: var(--red);   }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .features { grid-template-columns: 1fr; }
+    .header-stats { gap: 20px; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">BTC/USDT <span class="up">▲ +1.24%</span></span>
+    <span class="ticker-item">ETH/USDT <span class="down">▼ -0.38%</span></span>
+    <span class="ticker-item">SOL/USDT <span class="up">▲ +2.11%</span></span>
+    <span class="ticker-item">XMR/USDT <span class="up">▲ +1.52%</span></span>
+    <span class="ticker-item">DEXE/USDT <span class="up">▲ +0.19%</span></span>
+    <span class="ticker-item">Free Setup · No Hosting Required · 24/7 Automation</span>
+    <!-- duplicate for infinite scroll -->
+    <span class="ticker-item">BTC/USDT <span class="up">▲ +1.24%</span></span>
+    <span class="ticker-item">ETH/USDT <span class="down">▼ -0.38%</span></span>
+    <span class="ticker-item">SOL/USDT <span class="up">▲ +2.11%</span></span>
+    <span class="ticker-item">XMR/USDT <span class="up">▲ +1.52%</span></span>
+    <span class="ticker-item">DEXE/USDT <span class="up">▲ +0.19%</span></span>
+    <span class="ticker-item">Free Setup · No Hosting Required · 24/7 Automation</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="badge">Crypto Bot Developer</div>
+    <h1>Automated Trading<br><span>Bots That Work.</span></h1>
+    <p class="tagline">Google Apps Script bots — free to run, zero hosting fees, live 24/7. Telegram alerts, portfolio tracking, and trade journaling.</p>
+    <div class="header-stats">
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Production Bots</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">$0</span>
+        <span class="stat-label">Monthly Hosting Cost</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">24/7</span>
+        <span class="stat-label">Fully Automated</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">48h</span>
+        <span class="stat-label">Delivery Time</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PRODUCTS -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">// What I Build</p>
+    <h2 class="section-title">Available Bots</h2>
+    <div class="cards">
+
+      <!-- CARD 1 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-number">BOT_01</span>
+          <span class="price-tag">From $30</span>
+        </div>
+        <h3>Crypto Price Alert Bot</h3>
+        <p>Set target prices for any crypto pair. The moment price hits your level — above or below — you get an instant Telegram notification. Set it and forget it.</p>
+        <div class="features">
+          <span class="feature">Unlimited alert targets</span>
+          <span class="feature">Any KuCoin pair</span>
+          <span class="feature">Auto-reset after trigger</span>
+          <span class="feature">Checks every 5 minutes</span>
+          <span class="feature">/prices command</span>
+          <span class="feature">/alerts list</span>
+        </div>
+        <div class="tech-stack">
+          <span class="tech">Google Apps Script</span>
+          <span class="tech">KuCoin API</span>
+          <span class="tech">Telegram Bot</span>
+          <span class="tech">Free Forever</span>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-number">BOT_02</span>
+          <span class="price-tag">From $80</span>
+        </div>
+        <h3>Portfolio Tracker + Daily P&L Bot</h3>
+        <p>Track your entire crypto portfolio automatically. Prices update every 30 minutes, P&L is calculated in real-time, and you get a full daily report in Telegram every morning.</p>
+        <div class="features">
+          <span class="feature">Multi-coin tracking</span>
+          <span class="feature">Real-time P&L ($/%)</span>
+          <span class="feature">Google Sheets logging</span>
+          <span class="feature">Daily auto-report</span>
+          <span class="feature">Value history tab</span>
+          <span class="feature">Best/worst performer</span>
+        </div>
+        <div class="tech-stack">
+          <span class="tech">Google Apps Script</span>
+          <span class="tech">KuCoin API</span>
+          <span class="tech">Google Sheets</span>
+          <span class="tech">Telegram Bot</span>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-number">BOT_03</span>
+          <span class="price-tag">From $100</span>
+        </div>
+        <h3>Trading Journal Bot</h3>
+        <p>Log trades directly from Telegram with a simple command. The bot calculates R:R, tracks your win rate, total P&L, and best-performing setups — all saved to Google Sheets automatically.</p>
+        <div class="features">
+          <span class="feature">Log trades via Telegram</span>
+          <span class="feature">Auto R:R calculation</span>
+          <span class="feature">Win rate tracking</span>
+          <span class="feature">Total P&L running total</span>
+          <span class="feature">Best pair analysis</span>
+          <span class="feature">Open trades dashboard</span>
+        </div>
+        <div class="tech-stack">
+          <span class="tech">Google Apps Script</span>
+          <span class="tech">Google Sheets</span>
+          <span class="tech">Telegram Bot</span>
+          <span class="tech">No API Key Needed</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL DEMO -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <p class="section-label">// Live Demo</p>
+    <h2 class="section-title">What You'll Receive in Telegram</h2>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="terminal-title">Telegram — YourCryptoBot</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-gold">📈 BTC Moon Alert 🚀</span></div>
+        <div><span class="t-muted">━━━━━━━━━━━━━━━━━━━━</span></div>
+        <div><span class="t-white">💰 BTC-USDT</span></div>
+        <div><span class="t-white">📍 Current Price: </span><span class="t-green">$90,124.50</span></div>
+        <div><span class="t-white">🎯 Target:        $90,000</span></div>
+        <div><span class="t-green">📊 Status:        🟢 CROSSED ABOVE</span></div>
+        <div><span class="t-muted">━━━━━━━━━━━━━━━━━━━━</span></div>
+        <br>
+        <div><span class="t-accent">📊 Daily Portfolio Report</span></div>
+        <div><span class="t-muted">━━━━━━━━━━━━━━━━━━━━</span></div>
+        <div><span class="t-white">💼 Total Value:  </span><span class="t-gold">$1,284.32</span></div>
+        <div><span class="t-white">💵 Total Cost:   $1,100.00</span></div>
+        <div><span class="t-green">🟢 P&L:          +$184.32 (+16.76%)</span></div>
+        <div><span class="t-muted">━━━━━━━━━━━━━━━━━━━━</span></div>
+        <div><span class="t-white">• Bitcoin:  $90,124 ▲ +5.1%</span></div>
+        <div><span class="t-white">• Ethereum: $3,412  ▲ +6.6%</span></div>
+        <div><span class="t-red">  • Solana:  $118    ▼ -15.7%</span></div>
+        <br>
+        <div><span class="t-accent">📈 Trading Stats</span></div>
+        <div><span class="t-muted">━━━━━━━━━━━━━━━━━━━━</span></div>
+        <div><span class="t-white">📊 Total Trades:  24</span></div>
+        <div><span class="t-green">✅ Wins:          15</span></div>
+        <div><span class="t-red">❌ Losses:        7</span></div>
+        <div><span class="t-white">📐 Win Rate:      </span><span class="t-green">62.5%</span></div>
+        <div><span class="t-green">🟢 Total P&L:     +0.8842 BTC</span></div>
+        <div><span class="t-gold">🔥 Performing above average!</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="deliverables">
+      <p class="section-label">// Every Order Includes</p>
+      <h2 class="section-title" style="margin-bottom:0">What You Get</h2>
+      <div class="deliverable-grid">
+        <div class="deliverable">
+          <div class="deliverable-icon">📁</div>
+          <h4>Full Source Code</h4>
+          <p>Clean, commented .gs file — yours to keep, modify, and own forever.</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">🚀</div>
+          <h4>Complete Setup</h4>
+          <p>I deploy it for you. Telegram connected, triggers active, tested and live.</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">📖</div>
+          <h4>Step-by-Step Guide</h4>
+          <p>Written deployment guide so you can maintain it yourself easily.</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">🔧</div>
+          <h4>7-Day Support</h4>
+          <p>Any issues after delivery — I fix them. No extra charge.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-title">Ready to Automate?</h2>
+    <p class="cta-sub">Free to run. Professional quality. Delivered in 48 hours.</p>
+    <div class="cta-buttons">
+      <a href="https://www.fiverr.com/YOUR_USERNAME" class="btn btn-primary" target="_blank">Order on Fiverr</a>
+      <a href="https://www.upwork.com/freelancers/YOUR_PROFILE" class="btn btn-secondary" target="_blank">Hire on Upwork</a>
+    </div>
+    <p style="margin-top:24px; color: var(--muted); font-size:13px; font-family:'DM Mono',monospace;">
+      📩 Direct: YOUR_EMAIL@gmail.com &nbsp;|&nbsp; 💬 Telegram: @YOUR_HANDLE
+    </p>
+  </div>
+</section>
+
+</body>
+</html>
