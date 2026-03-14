@@ -54,9 +54,9 @@ A 12-pillar confluence indicator combining 10+ analytical modules into one cohes
 ## 📬 Contact
 
 - 🌐 **Portfolio:** [asterix-com.github.io](https://asterix-com.github.io)
-- ✉️ **Email:** your@email.com
-- ✈️ **Telegram:** @yourtelegram
-- 💼 **Fiverr:** fiverr.com/yourprofile
+- ✉️ **Email:** asterixcomltd@email.com
+- ✈️ **Telegram:** @Asterix_Abdin
+- 💼 **Fiverr:** fiverr.com/asterixcomltd
 - 🔗 **Upwork:** upwork.com/~yourprofile
 
 ---
