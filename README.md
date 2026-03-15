@@ -57,7 +57,7 @@ A 12-pillar confluence indicator combining 10+ analytical modules into one cohes
 - ✉️ **Email:** asterixcomltd@email.com
 - ✈️ **Telegram:** @Asterix_Abdin
 - 💼 **Fiverr:** fiverr.com/asterixcomltd
-- 🔗 **Upwork:** upwork.com/~yourprofile
+- 🔗 **Upwork:** upwork.com/~bb22edd5
 
 ---
 
